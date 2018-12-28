@@ -6,11 +6,20 @@ gem 'puma'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'mini_racer', platforms: :ruby
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', require: false
 
 group :development, :test do
+  gem 'rspec-rails'
 end
 
 group :development do
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'shoulda-callback-matchers'
+  gem 'rspec-its'
+  gem 'rspec-activemodel-mocks'
+  gem 'rails-controller-testing'
 end
