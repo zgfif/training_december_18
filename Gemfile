@@ -7,6 +7,8 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'mini_racer', platforms: :ruby
 gem 'bootsnap', require: false
+gem 'pundit'
+gem 'bitmask_attributes'
 
 group :development, :test do
   gem 'rspec-rails'
