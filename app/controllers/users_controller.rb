@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate!, only: :create
+
   wrap_parameters :user, include: %i(email password password_confirmation)
 
   def create
-    # p "The resource is #{resource}"
     render :errors, status: 422 unless resource.save
   end
 
@@ -14,7 +15,6 @@ class UsersController < ApplicationController
   end
 
   def build_resource
-    p "The resource_params is #{resource_params}"
     @resource = UserFactory.build resource_params
   end
 end
