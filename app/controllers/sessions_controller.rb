@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
   end
 
   private
+
   def resource
     @resource ||= AuthToken.find auth_token
   end
