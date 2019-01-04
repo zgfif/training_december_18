@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_03_182432) do
+ActiveRecord::Schema.define(version: 2019_01_04_182808) do
 
   create_table "auth_tokens", force: :cascade do |t|
     t.integer "user_id"
@@ -24,9 +24,7 @@ ActiveRecord::Schema.define(version: 2019_01_03_182432) do
     t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "roles", default: 1
-    t.string "confirmation_token"
-    t.boolean "confirmed", default: false, null: false
+    t.string "password_confirmation"
   end
 
 end
