@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Session
   include ActiveModel::Model
 
@@ -7,13 +9,15 @@ class Session
     @email = params[:email]
 
     @password = params[:password]
+
+    @id = @user.id if user
   end
 
-   validates :email, :password, presence: true
+  validates :email, :password, presence: true
 
-   validate :incorrect_email, :incorrect_password
+  validate :incorrect_email, :incorrect_password
 
-   alias_method :save, :valid?
+  alias_method :save, :valid?
 
   def auth_token
     user&.auth_tokens&.create!
@@ -24,17 +28,17 @@ class Session
   end
 
   def incorrect_email
-    emails = User.all.collect {|record| record.email }
+    emails = User.all.collect(&:email)
     unless emails.include? email
       errors.add(:email, "The #{email} is incorrect!")
     end
   end
 
   def incorrect_password
-    person = User.find_by(email: email)
+    person = User.find_by email: email
     if person.present?
       if person.password != password
-        errors.add(:password,'Your password is incorrect!')
+        errors.add(:password, 'Your password is incorrect!')
       end
     end
   end
