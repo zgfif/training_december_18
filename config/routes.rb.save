@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  namespace :api do
+  namespac
+e :api do   
     resources :users, only: :create
-
     resource :session, only: :create
   end
 end
