@@ -4,7 +4,6 @@ module Api
 
     def create
       render :errors, status: 422 unless resource.save
-      p resource.inspect
     end
 
     private

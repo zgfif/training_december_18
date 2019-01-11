@@ -24,4 +24,5 @@ group :test do
   gem 'rspec-its'
   gem 'rspec-activemodel-mocks'
   gem 'rails-controller-testing'
+  gem 'database_cleaner', '~> 1.7'
 end
