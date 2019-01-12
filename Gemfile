@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails'
 gem 'sqlite3'
 gem 'puma'
-gem 'sass-rails'
+gem 'sassc'
 gem 'uglifier'
 gem 'mini_racer', platforms: :ruby
 gem 'bootsnap', require: false
