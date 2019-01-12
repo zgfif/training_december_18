@@ -7,8 +7,8 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'mini_racer', platforms: :ruby
 gem 'bootsnap', require: false
-gem 'draper', '~> 3.0', '>= 3.0.1'
-gem 'bcrypt', '~> 3.1', '>= 3.1.12'
+gem 'draper'
+gem 'bcrypt'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -24,5 +24,4 @@ group :test do
   gem 'rspec-its'
   gem 'rspec-activemodel-mocks'
   gem 'rails-controller-testing'
-  gem 'database_cleaner', '~> 1.7'
 end
