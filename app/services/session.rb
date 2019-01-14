@@ -1,17 +1,7 @@
 class Session
-  include ActiveModel::Model
+  include ActiveModel::Validations
 
   attr_reader :email, :password
-
-  def initialize params = {}
-    @email = params[:email]
-
-    @password = params[:password]
-  end
-
-  def persisted?
-    false
-  end
 
   validates :email, :password, presence: true
 
@@ -21,26 +11,33 @@ class Session
 
   delegate :as_json, to: :auth_token, allow_nil: true
 
+  def initialize params = {}
+    @email = params[:email]
+
+    @password = params[:password]
+  end
+
   def auth_token
     @auth_token ||= user&.auth_tokens&.create!
   end
 
   def user
-    @user ||= User.find_by_email @email if @email.present?
+    @user ||= User.find_by email: email if email.present?
   end
 
   def incorrect_email
-    mail = User.find_by_email @email
+    return if email.blank?
 
-    errors.add(:email, "The #{@email} is incorrect!") unless mail
+    errors.add :email, "The #{email} is incorrect!" if user.blank?
   end
 
   def incorrect_password
-    person = User.find_by_email @email
-    if person
-      unless person.authenticate(@password)
-        errors.add(:password, 'The password is incorrect!')
-      end
+    return if password.blank?
+
+    return if user.blank?
+
+    unless user.authenticate password
+      errors.add(:password, 'The password is incorrect!')
     end
   end
 end
