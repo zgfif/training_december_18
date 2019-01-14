@@ -14,6 +14,8 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
+  config.include ActionControllerParameters
+
   [:controller, :view, :request].each do |type|
     config.include ::Rails::Controller::Testing::TestProcess, type: type
     config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
