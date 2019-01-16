@@ -28,7 +28,7 @@ class Session
   def incorrect_email
     return if email.blank?
 
-    errors.add :email, "The #{email} is incorrect!" if user.blank?
+    errors.add :email, "The #{ email } is incorrect!" if user.blank?
   end
 
   def incorrect_password
