@@ -10,7 +10,7 @@ RSpec.describe Api::UsersController, type: :controller do
   end
 
   describe '#resource_params' do
-    let(:params) { acp user: { email: 'pasha@gmail.com', password: 'pas', password_confirmation: 'pas' } }
+    let(:params) { acp user: { email: nil, password: nil, password_confirmation: nil } }
 
     before { expect(subject).to receive(:params).and_return(params) }
 
@@ -27,14 +27,14 @@ RSpec.describe Api::UsersController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
-  describe 'create.json' do
+  describe '#create.json' do
     let(:resource) { double }
 
     before { expect(subject).to receive(:build_resource) }
 
     before { expect(subject).to receive(:resource).and_return(resource) }
 
-    context '' do
+    context do
       before { expect(resource).to receive(:save).and_return(true) }
 
       before { post :create, params: {}, format: :json }
@@ -42,7 +42,7 @@ RSpec.describe Api::UsersController, type: :controller do
       it { should render_template(:create).with_status(201) }
     end
 
-    context '' do
+    context do
       before { expect(resource).to receive(:save).and_return(false) }
 
       before { post :create, params: {}, format: :json }
