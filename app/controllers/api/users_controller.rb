@@ -14,6 +14,7 @@ module Api
     end
 
     def resource_params
+      # params.require(:user).permit!
       params.require(:user).permit(:email, :password, :password_confirmation)
     end
   end
