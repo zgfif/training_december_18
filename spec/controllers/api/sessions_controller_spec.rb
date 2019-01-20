@@ -50,4 +50,8 @@ RSpec.describe Api::SessionsController, type: :controller do
       it { should render_template(:errors).with_status(422) }
     end
   end
+
+  describe '#destroy' do
+
+  end
 end
