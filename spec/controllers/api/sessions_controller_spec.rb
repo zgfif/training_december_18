@@ -50,4 +50,20 @@ RSpec.describe Api::SessionsController, type: :controller do
       it { should render_template(:errors).with_status(422) }
     end
   end
+
+  describe '#destroy' do
+    let(:resource) { double }
+
+    before { expect(subject).to receive(:authenticate!).and_return(true) }
+
+    before { allow(subject).to receive(:resource).and_return(resource) }
+
+    context do
+      before { expect(resource).to receive(:destroy).and_return(true) }
+
+      before { delete :destroy, params: {}, format: :json }
+
+      it { expect(response).to have_http_status(:no_content) }
+    end
+  end
 end
