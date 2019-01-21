@@ -9,6 +9,7 @@ gem 'mini_racer', platforms: :ruby
 gem 'bootsnap', require: false
 gem 'draper'
 gem 'bcrypt'
+gem 'bitmask_attributes'
 
 group :development, :test do
   gem 'rspec-rails'
