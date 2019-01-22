@@ -4,7 +4,8 @@ class UserDecorator < ApplicationDecorator
   def as_json *args
     {
       id: id,
-      email: email
+      email: email,
+      roles: roles
     }
   end
 end
