@@ -3,7 +3,12 @@ module Backoffice
     skip_before_action :authenticate!, only: :create
 
     def create
-      render :errors, status: 422 unless resource.save
+      if resource.user.roles?(:administrator)
+
+        render :errors, status: 422 unless resource.save
+      else
+        render json: {'error': 'You are not authorized'}, status: :forbidden
+      end
     end
 
     def destroy
@@ -24,5 +29,9 @@ module Backoffice
     def resource_params
       params.require(:session).permit(:email, :password)
     end
+  end
+
+  def is_admin?
+    resource.user.roles?(:administrator)
   end
 end
