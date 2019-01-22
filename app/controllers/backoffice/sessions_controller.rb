@@ -7,14 +7,19 @@ module Backoffice
 
         render :errors, status: 422 unless resource.save
       else
-        render json: {'error': 'You are not authorized'}, status: :forbidden
+        render json: {'error': 'Access denied'}, status: :forbidden
       end
     end
 
     def destroy
-      resource.destroy
+      if resource.user.roles?(:administrator)
 
-      head :no_content
+        resource.destroy
+
+        head :no_content
+      else
+        render json: {'error': 'Access denied'}, status: :forbidden
+      end
     end
 
     private

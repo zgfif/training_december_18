@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   end
 
   namespace :backoffice do
-    resource :session, only: :create
+    resource :session, only: %i(create destroy)
   end
 end
