@@ -1,5 +1,5 @@
 class AuthTokenPolicy < ApplicationPolicy
   def destroy?
-    user.roles?(:administrator)
+    user.roles? :administrator
   end
 end

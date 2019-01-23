@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  bitmask :roles, as: [:user, :administrator]
+  bitmask :roles, as: %i(user administrator)
 
   delegate :as_json, to: :decorate
 end
