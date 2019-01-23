@@ -1,5 +1,5 @@
 class AuthTokenPolicy < ApplicationPolicy
-  def create?
+  def destroy?
     user.roles?(:administrator)
   end
 end

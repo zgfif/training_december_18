@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe SessionPolicy, type: :policy do
+RSpec.describe AuthTokenPolicy, type: :policy do
   let(:resource) { nil }
 
   subject { described_class }
 
-  permissions :create? do
+  permissions :destroy? do
     context do
       let(:user) { User.new roles: :administrator }
 
