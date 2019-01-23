@@ -10,6 +10,7 @@ gem 'bootsnap', require: false
 gem 'draper'
 gem 'bcrypt'
 gem 'bitmask_attributes'
+gem 'pundit'
 
 group :development, :test do
   gem 'rspec-rails'
