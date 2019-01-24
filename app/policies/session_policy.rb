@@ -1,5 +1,5 @@
 class SessionPolicy < ApplicationPolicy
   def create?
-    user.roles?(:administrator)
+    user.roles? :administrator
   end
 end
