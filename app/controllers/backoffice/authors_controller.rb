@@ -1,9 +1,7 @@
 module Backoffice
   class AuthorsController < Api::ApplicationController
-    # skip_before_action :authorize_resource, :authenticate!
-
     def create
-      render :errors unless resource.save
+      render :errors, status: 422 unless resource.save
     end
 
     private
