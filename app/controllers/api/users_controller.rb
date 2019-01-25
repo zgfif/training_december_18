@@ -1,8 +1,8 @@
 module Api
   class UsersController < ApplicationController
-    skip_before_action :authorize_resource
-
     skip_before_action :authenticate!, only: :create
+
+    skip_before_action :authorize_resource
 
     def create
       render :errors, status: 422 unless resource.save
