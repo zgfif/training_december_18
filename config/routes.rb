@@ -4,4 +4,9 @@ Rails.application.routes.draw do
 
     resource :session, only: %i(create destroy)
   end
+
+  namespace :backoffice do
+    resource :session, only: %i(create destroy)
+    resources :authors, only: :create
+  end
 end

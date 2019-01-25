@@ -1,7 +1,8 @@
 module Api
   class ApplicationController < ActionController::Base
-    include ActsAsAuthorizedController
     include ActsAsAuthenticatedController
+
+    include ActsAsAuthorizedController
 
     skip_before_action :verify_authenticity_token
 
