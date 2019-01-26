@@ -4,6 +4,6 @@ module Api
 
     skip_before_action :authenticate!, only: :create
 
-    skip_before_action :authorize_resource
+    skip_before_action :authorize_resource, only: :create
   end
 end
