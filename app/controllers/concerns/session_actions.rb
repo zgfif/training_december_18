@@ -14,10 +14,6 @@ module SessionActions
     @resource ||= AuthToken.find auth_token
   end
 
-  def build_resource
-    @resource = Session.new resource_params
-  end
-
   def resource_params
     params.require(:session).permit(:email, :password)
   end

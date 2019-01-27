@@ -1,4 +1,4 @@
-class SessionPolicy < ApplicationPolicy
+class UserPolicy < ApplicationPolicy
   def create?
     user.roles? :administrator
   end

@@ -4,6 +4,9 @@ module Api
 
     skip_before_action :authenticate!, only: :create
 
-    skip_before_action :authorize_resource
+    private
+    def build_resource
+      @resource = Api::Session.new resource_params
+    end
   end
 end

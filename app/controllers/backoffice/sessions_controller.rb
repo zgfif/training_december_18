@@ -1,18 +1,12 @@
 module Backoffice
   class SessionsController < ApplicationController
-    skip_before_action :authenticate!, :authorize_resource, only: :create
+    include SessionActions
 
-    def create
-      render :errors, status: 422 unless resource.save
-    end
+    skip_before_action :authenticate!, only: :create
 
-    private
-    attr_reader :resource
+    before_action :authorize_resource
 
-    def resource_params
-      params.require(:session).permit(:email, :password)
-    end
-
+   private
     def build_resource
       @resource = Backoffice::Session.new resource_params
     end
