@@ -30,8 +30,6 @@ RSpec.describe Backoffice::SessionsController, type: :controller do
   describe '#create.json' do
     let(:resource) { double }
 
-    before { expect(subject).to receive(:authorize_resource).and_return(true) }
-
     before { expect(subject).to receive(:build_resource) }
 
     before { expect(subject).to receive(:resource).and_return(resource) }
