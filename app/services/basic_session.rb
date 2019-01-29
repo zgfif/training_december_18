@@ -1,7 +1,7 @@
 class BasicSession
   include ActiveModel::Validations
 
-  attr_reader :email, :password
+  attr_accessor :email, :password
 
   validates :email, :password, presence: true
 
@@ -40,3 +40,4 @@ class BasicSession
     end
   end
 end
+#
