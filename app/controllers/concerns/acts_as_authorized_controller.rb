@@ -10,6 +10,8 @@ module ActsAsAuthorizedController
 
     before_action :build_resource, only: :create
 
+    before_action :authorize_resource
+
     helper_method :resource
   end
 

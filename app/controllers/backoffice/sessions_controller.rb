@@ -1,8 +1,6 @@
 module Backoffice
   class SessionsController < ApplicationController
-    skip_before_action :authenticate!, only: :create
-
-    before_action :authorize_resource, only: :destroy
+    skip_before_action :authenticate!, :authorize_resource, only: :create
 
     def create
       render :errors, status: 422 unless resource.save

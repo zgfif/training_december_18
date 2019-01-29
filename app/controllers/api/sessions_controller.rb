@@ -24,5 +24,9 @@ module Api
     def build_resource
       @resource = Api::Session.new resource_params
     end
+
+    def authorize_resource
+      authorize resource, policy_class: Api::SessionPolicy
+    end
   end
 end
