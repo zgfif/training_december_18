@@ -1,4 +1,4 @@
-class AuthorDecorator < ApplicationDecorator
+class AuthorDecorator < Draper::Decorator
   delegate_all
 
   def as_json *args

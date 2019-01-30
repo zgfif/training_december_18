@@ -10,18 +10,13 @@ module ActsAsAuthorizedController
 
     before_action :build_resource, only: :create
 
-    before_action :authorize_resource, if: :user_exist?
+    before_action :authorize_resource
 
     helper_method :resource
   end
 
   private
-
   def authorize_resource
     authorize resource
-  end
-
-  def user_exist?
-    resource.user.present?
   end
 end

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AuthTokenDecorator do
+  it { should be_an Draper::Decorator }
+
   let (:auth_token) { stub_model AuthToken, id: 13 }
 
   subject { auth_token.decorate }

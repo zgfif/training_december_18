@@ -20,7 +20,7 @@ RSpec.describe Api::SessionsController, type: :controller do
   describe '#build_resource' do
     before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
 
-    before { expect(Session).to receive(:new).with(:resource_params).and_return(:resource) }
+    before { expect(Api::Session).to receive(:new).with(:resource_params).and_return(:resource) }
 
     before { subject.send :build_resource }
 
@@ -33,6 +33,8 @@ RSpec.describe Api::SessionsController, type: :controller do
     before { expect(subject).to receive(:user_exist?).and_return(true) }
 
     before { expect(subject).to receive(:build_resource) }
+
+    before { expect(subject).to receive(:authorize_resource).and_return(true) }
 
     before { expect(subject).to receive(:resource).and_return(resource) }
 
@@ -62,7 +64,9 @@ RSpec.describe Api::SessionsController, type: :controller do
 
     before { expect(subject).to receive(:authenticate!).and_return(true) }
 
-    before { allow(subject).to receive(:resource).and_return(resource) }
+    before { expect(subject).to receive(:authorize_resource).and_return(true) }
+
+    before { expect(subject).to receive(:resource).and_return(resource) }
 
     context do
       before { expect(resource).to receive(:destroy).and_return(true) }

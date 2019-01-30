@@ -1,7 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe Api::UsersController, type: :controller do
-  it { should be_an Api::ApplicationController }
+RSpec.describe Backoffice::SessionsController, type: :controller do
+  it { should be_a Backoffice::ApplicationController }
+
+  describe '#resource_params' do
+    let(:params) { acp session: { email: nil, password: nil } }
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    its(:resource_params) { should eq params[:session].permit! }
+  end
 
   describe '#resource' do
     before { subject.instance_variable_set :@resource, :resource }
@@ -9,18 +17,10 @@ RSpec.describe Api::UsersController, type: :controller do
     its(:resource) { should eq :resource }
   end
 
-  describe '#resource_params' do
-    let(:params) { acp user: { email: nil, password: nil, password_confirmation: nil } }
-
-    before { expect(subject).to receive(:params).and_return(params) }
-
-    its(:resource_params) { should eq params[:user].permit! }
-  end
-
   describe '#build_resource' do
     before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
 
-    before { expect(User).to receive(:new).with(:resource_params).and_return(:resource) }
+    before { expect(Backoffice::Session).to receive(:new).with(:resource_params).and_return(:resource) }
 
     before { subject.send :build_resource }
 
@@ -31,8 +31,6 @@ RSpec.describe Api::UsersController, type: :controller do
     let(:resource) { double }
 
     before { expect(subject).to receive(:build_resource) }
-
-    before { expect(subject).to receive(:authorize_resource).and_return(true) }
 
     before { expect(subject).to receive(:resource).and_return(resource) }
 

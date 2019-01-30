@@ -1,7 +1,7 @@
-class Session
+class BasicSession
   include ActiveModel::Validations
 
-  attr_reader :email, :password
+  attr_accessor :email, :password
 
   validates :email, :password, presence: true
 
@@ -27,7 +27,6 @@ class Session
 
   def incorrect_email
     return if email.blank?
-
     errors.add :email, "The #{ email } is incorrect!" if user.blank?
   end
 
@@ -41,3 +40,4 @@ class Session
     end
   end
 end
+#
