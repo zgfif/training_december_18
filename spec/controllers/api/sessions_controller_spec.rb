@@ -30,8 +30,6 @@ RSpec.describe Api::SessionsController, type: :controller do
   describe '#create.json' do
     let(:resource) { double }
 
-    before { expect(subject).to receive(:user_exist?).and_return(true) }
-
     before { expect(subject).to receive(:build_resource) }
 
     before { expect(subject).to receive(:authorize_resource).and_return(true) }
@@ -58,9 +56,6 @@ RSpec.describe Api::SessionsController, type: :controller do
   describe '#destroy' do
     let(:resource) { double }
 
-    before { expect(subject).to receive(:user_exist?).and_return(true) }
-
-    before { expect(subject).to receive(:authorize_resource).and_return(true) }
 
     before { expect(subject).to receive(:authenticate!).and_return(true) }
 
@@ -77,11 +72,3 @@ RSpec.describe Api::SessionsController, type: :controller do
     end
   end
 end
-
-__END__
-
-1) Api::SessionsController#destroy  should receive destroy(*(any args)) 1 time
-   Failure/Error: resource.user.present?
-     #<Double (anonymous)> received unexpected message :user with (no args)
-   # ./app/controllers/concerns/acts_as_authorized_controller.rb:25:in `user_exist?'
-   # ./spec/controllers/api/sessions_controller_spec.rb:64:in `block (4 levels) in <top (required)>'

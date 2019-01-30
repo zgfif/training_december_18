@@ -40,8 +40,6 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
 
     before { expect(subject).to receive(:authenticate!).and_return(current_user) }
 
-    before { expect(subject).to receive(:user_exist?).and_return(true) }
-
     before { expect(subject).to receive(:authorize_resource).and_return(true) }
 
     before{ expect(subject).to receive(:build_resource) }
