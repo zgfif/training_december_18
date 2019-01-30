@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
+  it { should be_an Draper::Decorator }
+
   let :user do
     stub_model User, id: 13, email: 'pasha@gmail.com', roles: %i(user)
   end

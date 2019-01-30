@@ -1,4 +1,4 @@
-class AuthTokenDecorator < ApplicationDecorator
+class AuthTokenDecorator < Draper::Decorator
   delegate_all
 
   def as_json *args
