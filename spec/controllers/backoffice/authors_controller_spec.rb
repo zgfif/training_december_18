@@ -24,7 +24,7 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
 
     before { expect(subject).to receive(:current_user).and_return(current_user) }
 
-    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
+    before { expect(subject).to receive(:resource_params).and_return(resource_params) }
 
     before { expect(current_user).to receive_message_chain('authors.new').and_return(:resource) }
 
