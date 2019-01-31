@@ -69,4 +69,12 @@ RSpec.describe Api::SessionsController, type: :controller do
       it { expect(response).to have_http_status(:no_content) }
     end
   end
+
+  describe '#authorize_resource' do
+    before { expect(subject).to receive(:resource).and_return(:resource)  }
+
+    before { expect(subject).to receive(:authorize).with(:resource, policy_class: Api::SessionPolicy).and_return(:authorize_resource) }
+
+    its(:authorize_resource) { should eq :authorize_resource }
+  end
 end

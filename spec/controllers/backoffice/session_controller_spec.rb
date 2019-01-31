@@ -50,4 +50,12 @@ RSpec.describe Backoffice::SessionsController, type: :controller do
       it { should render_template(:errors).with_status(422) }
     end
   end
+
+  describe '#authorize_resource' do
+    before { expect(subject).to receive(:resource).and_return(:resource)  }
+
+    before { expect(subject).to receive(:authorize).with(:resource, policy_class: Backoffice::SessionPolicy).and_return(:authorize_resource) }
+
+    its(:authorize_resource) { should eq :authorize_resource }
+  end
 end
