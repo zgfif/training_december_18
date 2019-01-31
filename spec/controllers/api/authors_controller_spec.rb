@@ -33,4 +33,15 @@ RSpec.describe Api::AuthorsController, type: :controller do
 
     it { should render_template(:index).with_status(200) }
   end
+
+  describe '#authorize_collection' do
+    before { expect(subject).to receive(:collection).and_return(:collection)  }
+
+    before do
+      expect(subject).to receive(:authorize).with(:collection,
+        policy_class: Api::AuthorPolicy).and_return(:authorize_collection)
+    end
+
+    its(:authorize_collection) { should eq :authorize_collection }
+  end
 end

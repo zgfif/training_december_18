@@ -38,7 +38,7 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
 
     let(:current_user) { double }
 
-    before { expect(subject).to receive(:authenticate!).and_return(current_user) }
+    before { expect(subject).to receive(:authenticate!).and_return(true) }
 
     before { expect(subject).to receive(:authorize_resource).and_return(true) }
 
@@ -65,5 +65,29 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
         should render_template(:errors).with_status(422)
       end
     end
+  end
+
+  describe '#authorize_collection' do
+    before { expect(subject).to receive(:collection).and_return(:collection)  }
+
+    before do
+      expect(subject).to receive(:authorize).with(:collection, policy_class:
+
+        Backoffice::AuthorPolicy).and_return(:authorize_collection)
+    end
+
+    its(:authorize_collection) { should eq :authorize_collection }
+  end
+
+  describe '#authorize_resource' do
+    before { expect(subject).to receive(:resource).and_return(:resource)  }
+
+    before do
+      expect(subject).to receive(:authorize).with(:resource, policy_class:
+
+        Backoffice::AuthorPolicy).and_return(:authorize_resource)
+    end
+
+    its(:authorize_resource) { should eq :authorize_resource }
   end
 end

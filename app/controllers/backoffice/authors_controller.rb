@@ -25,5 +25,9 @@ module Backoffice
     def authorize_collection
       authorize collection, policy_class: Backoffice::AuthorPolicy
     end
+
+    def authorize_resource
+      authorize resource, policy_class: Backoffice::AuthorPolicy
+    end
   end
 end
