@@ -24,5 +24,9 @@ module Backoffice
     def build_resource
       @resource = Backoffice::Session.new resource_params
     end
+
+    def authorize_resource
+      authorize resource, policy_class: Backoffice::SessionPolicy
+    end
   end
 end

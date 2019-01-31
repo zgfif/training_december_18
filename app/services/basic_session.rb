@@ -27,7 +27,7 @@ class BasicSession
 
   def incorrect_email
     return if email.blank?
-    errors.add :email, "The #{ email } is incorrect!" if user.blank?
+    errors.add :email, :invalid if user.blank?
   end
 
   def incorrect_password
@@ -36,8 +36,7 @@ class BasicSession
     return if user.blank?
 
     unless user.authenticate password
-      errors.add(:password, 'The password is incorrect!')
+      errors.add :password, :invalid
     end
   end
 end
-#

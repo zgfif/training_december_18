@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Backoffice::AuthorsController, type: :controller do
-  it { should be_an Api::ApplicationController }
+  it { should be_an Backoffice::ApplicationController }
 
   describe '#resource' do
     before { subject.instance_variable_set :@resource, :resource }

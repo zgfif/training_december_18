@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe BasicSession, type: :model do
   subject { described_class.new email: 'pasha@gmail.com', password: '12' }
+  # let(:user) { double }
 
   it { should delegate_method(:as_json).to(:auth_token).allow_nil }
 
@@ -30,7 +31,6 @@ RSpec.describe BasicSession, type: :model do
 
     its(:auth_token) { should eq :auth_token }
   end
-
 
   describe '#user' do
     context do

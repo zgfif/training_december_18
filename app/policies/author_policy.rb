@@ -3,4 +3,3 @@ class AuthorPolicy < ApplicationPolicy
     user.roles? :administrator
   end
 end
-#

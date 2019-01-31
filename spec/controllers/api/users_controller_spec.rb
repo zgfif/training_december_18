@@ -32,8 +32,6 @@ RSpec.describe Api::UsersController, type: :controller do
 
     before { expect(subject).to receive(:build_resource) }
 
-    before { expect(subject).to receive(:authorize_resource).and_return(true) }
-
     before { expect(subject).to receive(:resource).and_return(resource) }
 
     context do
