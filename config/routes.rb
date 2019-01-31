@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     resources :users, only: :create
 
     resource :session, only: %i(create destroy)
+
+    resources :authors, only: :index
   end
 
   namespace :backoffice do

@@ -10,9 +10,11 @@ module ActsAsAuthorizedController
 
     before_action :build_resource, only: :create
 
-    before_action :authorize_resource
+    before_action :authorize_resource, except: :index
 
     helper_method :resource
+
+    helper_method :collection
   end
 
   private

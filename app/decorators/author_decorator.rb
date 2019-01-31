@@ -2,6 +2,6 @@ class AuthorDecorator < Draper::Decorator
   delegate_all
 
   def as_json *args
-    { author: { name: name } }
+    { id: id, name: name }
   end
 end
