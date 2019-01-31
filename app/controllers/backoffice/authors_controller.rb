@@ -8,7 +8,7 @@ module Backoffice
     attr_reader :resource
 
     def build_resource
-      @resource = current_user.authors.new resource_params
+      @resource = Author.new resource_params.merge(user: current_user)
     end
 
     def resource_params
