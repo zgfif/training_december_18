@@ -27,6 +27,8 @@ RSpec.describe Api::AuthorsController, type: :controller do
 
     before { expect(subject).to receive(:build_collection) }
 
+    before { expect(subject).to receive(:authorize_collection).and_return(true) }
+
     before { get :index, params: {}, format: :json }
 
     it { should render_template(:index).with_status(200) }

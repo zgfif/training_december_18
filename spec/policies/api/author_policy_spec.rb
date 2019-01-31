@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe AuthorPolicy, type: :policy do
+RSpec.describe Api::AuthorPolicy, type: :policy do
   let(:resource) { nil }
 
   subject { described_class }
 
-  permissions :create? do
+  permissions :index? do
     context do
-      let(:user) { stub_model User, roles: :administrator }
+      let(:user) { stub_model User, id: nil, email: nil }
 
       it { should permit user, resource }
     end
 
     context do
-      let(:user) { stub_model User, roles: :user }
+      let(:user) { nil }
 
       it { should_not permit user, resource }
     end
