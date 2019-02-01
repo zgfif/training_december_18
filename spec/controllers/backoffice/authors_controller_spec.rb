@@ -10,23 +10,19 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
   end
 
   describe '#resource_params' do
-    let(:params) { acp author: { name: 'Sam Smith' } }
+    let(:params) { acp author: { name: nil } }
 
     before { expect(subject).to receive(:params).and_return(params) }
 
-    its(:resource_params) { should eq params[:author].permit! }
+    before { expect(subject).to receive(:current_user).and_return(:current_user) }
+
+    its(:resource_params) { should eq params[:author].merge(user: :current_user).permit! }
   end
 
-  describe '#build_params' do
-    let(:current_user) { stub_model User, id: 1 }
+  describe '#build_resource' do
+    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
 
-    let (:resource_params) { double }
-
-    before { expect(subject).to receive(:current_user).and_return(current_user) }
-
-    before { expect(subject).to receive(:resource_params).and_return(resource_params) }
-
-    before { expect(current_user).to receive_message_chain('authors.new').and_return(:resource) }
+    before { expect(Author).to receive(:new).with(:resource_params).and_return(:resource) }
 
     before { subject.send :build_resource }
 
@@ -35,8 +31,6 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
 
   describe '#create.json' do
     let(:resource) { double }
-
-    let(:current_user) { double }
 
     before { expect(subject).to receive(:authenticate!).and_return(true) }
 
@@ -51,9 +45,7 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
 
       before { post :create, params: {}, format: :json }
 
-      it do
-        should render_template(:create).with_status(201)
-      end
+      it { should render_template(:create).with_status(201) }
     end
 
     context do
@@ -61,33 +53,37 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
 
       before { post :create, params: {}, format: :json }
 
-      it do
-        should render_template(:errors).with_status(422)
-      end
+      it { should render_template(:errors).with_status(422) }
+    end
+  end
+
+  describe '#collection' do
+    context do
+      before { subject.instance_variable_set :@collection, :collection }
+
+      its(:collection) { should eq :collection }
+    end
+
+    context do
+      before { expect(Author).to receive(:order).with(:name).and_return(:collection) }
+
+      its(:collection) { should eq :collection }
     end
   end
 
   describe '#authorize_collection' do
     before { expect(subject).to receive(:collection).and_return(:collection)  }
 
-    before do
-      expect(subject).to receive(:authorize).with(:collection, policy_class:
+    it { expect(subject).to receive(:authorize).with(:collection, policy_class: Backoffice::AuthorPolicy) }
 
-        Backoffice::AuthorPolicy).and_return(:authorize_collection)
-    end
-
-    its(:authorize_collection) { should eq :authorize_collection }
+    after { subject.send :authorize_collection }
   end
 
   describe '#authorize_resource' do
     before { expect(subject).to receive(:resource).and_return(:resource)  }
 
-    before do
-      expect(subject).to receive(:authorize).with(:resource, policy_class:
+    it { expect(subject).to receive(:authorize).with(:resource, policy_class: Backoffice::AuthorPolicy) }
 
-        Backoffice::AuthorPolicy).and_return(:authorize_resource)
-    end
-
-    its(:authorize_resource) { should eq :authorize_resource }
+    after { subject.send :authorize_resource }
   end
 end
