@@ -1,4 +1,4 @@
 module Api
-  class Session < BasicSession
+  class Session < ::Session
   end
 end

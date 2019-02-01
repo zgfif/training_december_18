@@ -1,4 +1,4 @@
-class BasicSession
+class Session
   include ActiveModel::Validations
 
   attr_accessor :email, :password

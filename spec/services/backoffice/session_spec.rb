@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Backoffice::Session, type: :model do
   subject { described_class.new email: 'example@user.com', password: '111' }
 
-  it { should be_an BasicSession }
+  it { should be_an Session }
 
   describe '#user' do
     context do

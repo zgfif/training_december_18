@@ -1,5 +1,5 @@
 module Backoffice
-  class Session < BasicSession
+  class Session < ::Session
     def user
       @user ||= User.with_roles(:administrator).find_by email: email if email
     end

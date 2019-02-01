@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe BasicSession, type: :model do
+RSpec.describe Session, type: :model do
   subject { described_class.new email: 'pasha@gmail.com', password: '12' }
-  # let(:user) { double }
 
   it { should delegate_method(:as_json).to(:auth_token).allow_nil }
 
