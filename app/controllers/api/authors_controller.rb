@@ -1,13 +1,8 @@
 module Api
   class AuthorsController < ApplicationController
-    def index
-    end
-
     private
-    attr_reader :collection
-
-    def build_collection
-      @collection = Author.all.order :name
+    def collection
+      @collection ||= Author.order :name
     end
 
     def authorize_collection
