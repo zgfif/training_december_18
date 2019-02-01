@@ -11,5 +11,7 @@ Rails.application.routes.draw do
     resource :session, only: %i(create destroy)
 
     resources :authors, only: %i(index create)
+
+    resources :categories, only: :create
   end
 end
