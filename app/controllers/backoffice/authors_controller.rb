@@ -7,7 +7,7 @@ module Backoffice
     end
 
     def update
-      categries_array
+      categories_array
 
       assign_categories
     end
@@ -28,7 +28,7 @@ module Backoffice
       params.require(:author).permit(:name, category_ids: []).merge(user: current_user)
     end
 
-    def categries_array
+    def categories_array
       ids = resource_params[:category_ids]
 
       ids = ids[0].split(',')

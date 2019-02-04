@@ -8,7 +8,9 @@ class Category < ApplicationRecord
   delegate :as_json, to: :decorate
 
   def update_total_authors
-    self.authors_count = self.author_ids.count
+    total_count = self.author_ids.count
+    
+    self.authors_count = total_count
 
     self.save
   end
