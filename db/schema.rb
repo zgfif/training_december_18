@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_01_191423) do
+ActiveRecord::Schema.define(version: 2019_02_03_191955) do
 
   create_table "auth_tokens", force: :cascade do |t|
     t.integer "user_id"
@@ -24,7 +24,13 @@ ActiveRecord::Schema.define(version: 2019_02_01_191423) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "authors_count"
     t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "categories_people", id: false, force: :cascade do |t|
+    t.integer "author_id", null: false
+    t.integer "category_id", null: false
   end
 
   create_table "people", force: :cascade do |t|
