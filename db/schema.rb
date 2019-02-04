@@ -29,8 +29,10 @@ ActiveRecord::Schema.define(version: 2019_02_03_191955) do
   end
 
   create_table "categories_people", id: false, force: :cascade do |t|
-    t.integer "author_id", null: false
+    t.integer "person_id", null: false
     t.integer "category_id", null: false
+    t.index ["category_id", nil], name: "index_categories_people_on_category_id_and_author_id"
+    t.index [nil, "category_id"], name: "index_categories_people_on_author_id_and_category_id"
   end
 
   create_table "people", force: :cascade do |t|

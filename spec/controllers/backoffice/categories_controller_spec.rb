@@ -20,7 +20,7 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
 
     before { subject.send :build_resource }
 
-    its(:resource) {should eq :resource }
+    its(:resource) { should eq :resource }
   end
 
   describe '#resource' do
@@ -38,31 +38,27 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
    end
 
    describe '#create.json' do
-     let(:resource) { double }
-
      before { expect(subject).to receive(:authenticate!).and_return(true) }
 
      before { expect(subject).to receive(:authorize_resource).and_return(true) }
 
      before { expect(subject).to receive(:build_resource) }
 
-     before { expect(subject).to receive(:resource).and_return(resource) }
+     context do
+       before { expect(subject).to receive_message_chain(:resource, :save).and_return(true) }
 
-    context do
-      before { expect(resource).to receive(:save).and_return(true) }
+       before { post :create, params: {}, format: :json }
 
-      before { post :create, params: {}, format: :json }
-
-      it { should render_template(:create).with_status(201) }
+       it { should render_template(:create).with_status(201) }
      end
 
      context do
-       before { expect(resource).to receive(:save).and_return(false) }
+       before { expect(subject).to receive_message_chain(:resource, :save).and_return(false) }
 
        before { post :create, params: {}, format: :json }
 
        it { should render_template(:errors).with_status(422) }
-      end
+     end
    end
 end
 #
