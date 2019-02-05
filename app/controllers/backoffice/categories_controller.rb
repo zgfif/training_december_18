@@ -12,7 +12,7 @@ module Backoffice
     end
 
     def resource_params
-      params.require(:category).permit(:name).merge(user: current_user)
+      params.require(:category).permit(:name)
     end
 
     def authorize_resource

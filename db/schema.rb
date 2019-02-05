@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_03_191955) do
+ActiveRecord::Schema.define(version: 2019_02_04_205734) do
 
   create_table "auth_tokens", force: :cascade do |t|
     t.integer "user_id"
@@ -21,18 +21,15 @@ ActiveRecord::Schema.define(version: 2019_02_03_191955) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "authors_count"
-    t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
   create_table "categories_people", id: false, force: :cascade do |t|
-    t.integer "person_id", null: false
     t.integer "category_id", null: false
-    t.index ["category_id", nil], name: "index_categories_people_on_category_id_and_author_id"
-    t.index [nil, "category_id"], name: "index_categories_people_on_author_id_and_category_id"
+    t.integer "person_id", null: false
+    t.index ["category_id", "person_id"], name: "index_categories_people_on_category_id_and_person_id"
+    t.index ["person_id", "category_id"], name: "index_categories_people_on_person_id_and_category_id"
   end
 
   create_table "people", force: :cascade do |t|

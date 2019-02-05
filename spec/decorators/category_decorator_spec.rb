@@ -8,6 +8,6 @@ RSpec.describe CategoryDecorator do
   subject { category.decorate }
 
   its :as_json do
-    should eq category: { name: 'sci-fi' }
+    should eq id: 13, name: 'sci-fi'
   end
 end

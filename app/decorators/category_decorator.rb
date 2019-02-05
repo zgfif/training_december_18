@@ -2,6 +2,6 @@ class CategoryDecorator < Draper::Decorator
   delegate_all
 
   def as_json *args
-    { category: { name: name } }
+    { id: id, name: name }
   end
 end

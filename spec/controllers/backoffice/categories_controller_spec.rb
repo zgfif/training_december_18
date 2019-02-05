@@ -8,9 +8,7 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
 
     before { expect(subject).to receive(:params).and_return(params) }
 
-    before { expect(subject).to receive(:current_user).and_return(:current_user) }
-
-    its(:resource_params) { should eq params[:category].permit!.merge(user: :current_user) }
+    its(:resource_params) { should eq params[:category].permit! }
   end
 
   describe '#build_resource' do
@@ -61,4 +59,3 @@ RSpec.describe Backoffice::CategoriesController, type: :controller do
      end
    end
 end
-#
