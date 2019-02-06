@@ -27,7 +27,7 @@ RSpec.describe Backoffice::AvatarsController, type: :controller do
     its(:resource_params) { should eq params.permit(:avatar) }
   end
 
-  describe '#create.json' do
+  pending '#create.json' do
 
     let(:resource) { double }
 
@@ -50,6 +50,3 @@ RSpec.describe Backoffice::AvatarsController, type: :controller do
     after { subject.send :authorize_resource }
   end
 end
-
-__END__
-# resource.avatar.attach resource_params[:avatar]
