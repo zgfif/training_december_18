@@ -1,13 +1,11 @@
 module Backoffice
   class AuthorsController < ApplicationController
-    include AssigningCategory
-
     def create
       render :errors, status: 422 unless resource.save
     end
 
     def update
-      resource.categories.push new_categories
+      render :errors, status: 422 unless resource.update resource_params
     end
 
     private
@@ -15,6 +13,10 @@ module Backoffice
 
     def build_resource
       @resource = Author.new resource_params
+    end
+
+    def find_resource
+      @resource ||= Author.find params[:id]
     end
 
     def resource_params

@@ -99,25 +99,34 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
     after { subject.send :authorize_resource }
   end
 
-    describe '#new_categories' do
-      let(:new_categories_ids) { double }
-
-      before { expect(subject).to receive(:new_categories_ids).and_return(:new_categories_ids) }
-
-      before { expect(Category).to receive(:where).with(id: :new_categories_ids).and_return(:new_categories) }
-
-      its(:new_categories) { should eq :new_categories }
-    end
-
-  pending '#update.json' do
+  describe '#update.json' do
     let(:resource) { double }
+
+    before { expect(subject).to receive(:authenticate!).and_return(true) }
+
+    before { expect(subject).to receive(:authorize_resource).and_return(true) }
+
+    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
+
+    before { expect(subject).to receive(:find_resource).and_return(:resource) }
 
     before { expect(subject).to receive(:resource).and_return(resource) }
 
-    before { expect(resource).to receive_message_chain(:categories, :push).and_return(true) }
+    context do
+      before { expect(resource).to receive(:update).with(:resource_params).and_return(true) }
 
-    before { patch :update, params: { id: 1 }, format: :json }
+      before { patch :update, params: { id: 1 }, format: :json }
 
-    it { should render_template(:update) }
+      it { should render_template(:update).with_status(200) }
+    end
+
+    context do
+      before { expect(resource).to receive(:update).with(:resource_params).and_return(false) }
+
+      before { patch :update, params: { id: 1 }, format: :json }
+
+      it { should render_template(:errors).with_status(422) }
+    end
+
   end
 end
