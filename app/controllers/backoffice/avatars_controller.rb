@@ -1,13 +1,9 @@
 module Backoffice
   class AvatarsController < ApplicationController
     def create
-      resource.avatar.attach resource_params[:avatar]
-
-      unless resource.avatar.image?
-        resource.avatar.detach
-
-        resource.errors.add :type, :invalid
-
+      if resource.valid?
+        resource.attach_avatar
+      else
         render :errors, status: 422
       end
     end
@@ -16,8 +12,13 @@ module Backoffice
     attr_reader :resource
 
     def build_resource
-      @resource = Author.find params[:author_id]
+      @resource ||= Backoffice::Avatar.new author, resource_params[:avatar]
     end
+
+    def author
+      @author ||= Author.find params[:author_id]
+    end
+
 
     def resource_params
       params.permit(:avatar)
