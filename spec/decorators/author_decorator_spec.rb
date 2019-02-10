@@ -8,6 +8,6 @@ RSpec.describe AuthorDecorator do
   subject { author.decorate }
 
   its :as_json do
-    should eq id: 13, name: 'Will Smith', has_avatar: true
+    should eq id: 13, name: 'Will Smith', categories: author.categories
   end
 end

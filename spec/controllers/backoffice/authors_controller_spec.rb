@@ -19,6 +19,18 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
     its(:resource_params) { should eq params[:author].merge(user: :current_user).permit! }
   end
 
+  describe '#find_resource' do
+    let(:params) { acp id: nil }
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    before { expect(Author).to receive(:find).with(params[:id]).and_return(:resource) }
+
+    before { subject.send :find_resource }
+
+    its(:resource) { should eq :resource }
+  end
+
   describe '#build_resource' do
     before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
 
@@ -85,5 +97,36 @@ RSpec.describe Backoffice::AuthorsController, type: :controller do
     it { expect(subject).to receive(:authorize).with(:resource, policy_class: Backoffice::AuthorPolicy) }
 
     after { subject.send :authorize_resource }
+  end
+
+  describe '#update.json' do
+    let(:resource) { double }
+
+    before { expect(subject).to receive(:authenticate!).and_return(true) }
+
+    before { expect(subject).to receive(:authorize_resource).and_return(true) }
+
+    before { expect(subject).to receive(:resource_params).and_return(:resource_params) }
+
+    before { expect(subject).to receive(:find_resource).and_return(:resource) }
+
+    before { expect(subject).to receive(:resource).and_return(resource) }
+
+    context do
+      before { expect(resource).to receive(:update).with(:resource_params).and_return(true) }
+
+      before { patch :update, params: { id: 1 }, format: :json }
+
+      it { should render_template(:update).with_status(200) }
+    end
+
+    context do
+      before { expect(resource).to receive(:update).with(:resource_params).and_return(false) }
+
+      before { patch :update, params: { id: 1 }, format: :json }
+
+      it { should render_template(:errors).with_status(422) }
+    end
+
   end
 end

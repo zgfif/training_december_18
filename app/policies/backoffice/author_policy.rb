@@ -7,5 +7,9 @@ module Backoffice
     def create?
       !!user&.roles?(:administrator)
     end
+
+    def update?
+      !!user&.roles?(:administrator)
+    end
   end
 end

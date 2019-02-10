@@ -4,6 +4,10 @@ module Backoffice
       render :errors, status: 422 unless resource.save
     end
 
+    def update
+      render :errors, status: 422 unless resource.update resource_params
+    end
+
     private
     attr_reader :resource
 
@@ -11,8 +15,12 @@ module Backoffice
       @resource = Author.new resource_params
     end
 
+    def find_resource
+      @resource ||= Author.find params[:id]
+    end
+
     def resource_params
-      params.require(:author).permit(:name).merge(user: current_user)
+      params.require(:author).permit(:name, category_ids: []).merge(user: current_user)
     end
 
     def collection

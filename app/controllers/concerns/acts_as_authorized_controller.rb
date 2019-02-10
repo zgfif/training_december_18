@@ -8,7 +8,14 @@ module ActsAsAuthorizedController
       head :forbidden
     end
 
+
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      head :not_found
+    end
+
     before_action :build_resource, only: :create
+
+    before_action :find_resource, only: :update
 
     before_action :authorize_resource, except: :index
 
