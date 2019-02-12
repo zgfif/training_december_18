@@ -17,19 +17,19 @@ module Backoffice
     validate :is_image?
 
     def is_image?
-      return if @params.blank?
+      return if params.blank?
 
       errors.add :avatar, 'has invalid format' unless content_type_image?
     end
 
     def content_type_image?
-      CONTENT_TYPE.include? @params.content_type
+      CONTENT_TYPE.include? params.content_type
     end
 
     def attach_avatar
-      return if @author.blank?
+      return if author.blank?
 
-      @author.avatar.attach @params
+      author.avatar.attach params
     end
   end
 end
