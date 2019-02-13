@@ -35,11 +35,43 @@ RSpec.describe Backoffice::Avatar, type: :model do
     end
 
     context do
-      let(:params) { ActionDispatch::Http::UploadedFile.new type: 'plain/text', tempfile: 'lenna.png' }
+      let(:params) { ActionDispatch::Http::UploadedFile.new type: 'plain/text', tempfile: 'new.txt' }
 
       before { expect(subject).to receive(:params).and_return(params) }
 
       its(:content_type_image?) { should be false }
+    end
+  end
+
+  describe '#is_image?' do
+    let(:call) { -> {subject.is_image? } }
+
+    context do
+      subject { described_class.new nil, nil }
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+    context do
+    let(:params) { ActionDispatch::Http::UploadedFile.new type: 'image/png', tempfile: 'lenna.png' }
+
+    subject { described_class.new nil, params }
+
+      context do
+        let(:content_type_image?) { true }
+
+        before {expect(subject).to receive(:content_type_image?).and_return(content_type_image?) }
+
+        it { expect(&call).to_not change { subject.errors.details } }
+      end
+
+      context do
+        let(:content_type_image?) { false }
+
+        before {expect(subject).to receive(:content_type_image?).and_return(content_type_image?) }
+
+        it { expect(&call).to change { subject.errors.details } }
+      end
     end
   end
 end
