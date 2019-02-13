@@ -50,4 +50,94 @@ RSpec.describe Session, type: :model do
       its(:user) { should be_nil }
     end
   end
+
+  describe '#incorrect_email' do
+    let(:call) { -> { subject.incorrect_email } }
+
+    subject { described_class.new }
+
+    context do
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+    context do
+      # subject { described_class.new }
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+    context do
+      subject { described_class.new email: 'user@example.com' }
+
+      let(:user) { stub_model User, id: 1 }
+
+      before { expect(subject).to receive(:user).and_return(user) }
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+    context do
+      subject { described_class.new email: 'user@example.com' }
+
+      let(:user) { nil }
+
+      before { expect(subject).to receive(:user).and_return(user) }
+
+      it { expect(&call).to change { subject.errors.details } }
+    end
+  end
+
+  describe '#incorrect_password' do
+    let(:call) { -> { subject.incorrect_password } }
+
+    context do
+      subject { described_class.new }
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+    context do
+      subject { described_class.new password: '123' }
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+    context do
+      subject { described_class.new email: 'user@example.com' }
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+    context do
+      subject { described_class.new email: 'user@example.com', password: '123' }
+
+      it { expect(&call).to_not change { subject.errors.details } }
+    end
+
+
+    context do
+      let(:user) { stub_model User, email: 'user@example.com', password: '123' }
+
+      context do
+        subject { described_class.new email: 'user@example.com', password: '123' }
+
+        before { expect(subject).to receive(:user).and_return(user) }
+
+        before { expect(subject).to receive(:user).and_return(user) }
+
+        it { expect(&call).to_not change { subject.errors.details } }
+      end
+
+      context do
+        subject { described_class.new email: 'user@example.com', password: '12' }
+
+        before { expect(subject).to receive(:user).and_return(user) }
+
+        before { expect(subject).to receive(:user).and_return(user) }
+
+        it { expect(&call).to change { subject.errors.details } }
+      end
+    end
+  end
 end

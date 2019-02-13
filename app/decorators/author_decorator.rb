@@ -3,7 +3,7 @@ class AuthorDecorator < Draper::Decorator
 
   def as_json *args
     { id: id, name: name,
-      has_avatar: object.avatar.present?,
+      has_avatar: object.avatar.attached?,
       categories: author.categories }
   end
 end
